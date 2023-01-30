@@ -144,7 +144,7 @@ def main():
     req = requests.get(url=url, headers=headers, params=params)
 
     if not req.ok:
-        print("request failed with %d" & req.status_code)
+        print("request failed with %s" % req.status_code)
         exit(-2)
     else:
         print("request success")
