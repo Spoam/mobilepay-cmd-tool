@@ -2,6 +2,7 @@ import requests
 from sys import argv
 from datetime import date,timedelta
 import csv
+import json
 
 keyfile = open('apikey.txt', "r")
 
@@ -144,7 +145,9 @@ def main():
     req = requests.get(url=url, headers=headers, params=params)
 
     if not req.ok:
-        print("request failed with %s %s" % (req.status_code, req.reason))
+        print("request failed with %s %s. \nMessage: %s" % (req.status_code, req.reason, req.json()["message"]))
+        with open("error-%s-request.json" % date.today().strftime("%Y-%m-%d"), "w") as errorlog:
+            errorlog.write(req.text)  
         exit(-2)
     else:
         print("request success")
